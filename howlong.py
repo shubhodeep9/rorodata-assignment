@@ -41,7 +41,19 @@ class HowLong:
 			'destinations':self.LOCATION2
 		}
 		response = requests.get(self.MATRIXURI, params=uridata)
-		print response.json()
+		data = response.json()
+
+		element = data["rows"][0]["elements"][0]
+
+		# fetch status of the elements
+		status_elements = element["status"]
+		if status_elements == "OK":
+			# get distance and time
+			distance = element["distance"]["text"]
+			time = element["duration"]["text"]
+			print distance + '\n' + time
+		else:
+			print status_elements
 
 
 def main():
